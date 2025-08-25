@@ -1,0 +1,109 @@
+{
+  "header": {
+    "warning": "*** Este é um ambiente de teste de integração direta - não grava realmente e o prontuário médico resultante é predefinido ***",
+    "bearerToken": "Token de Portador:",
+    "enterToken": "Digite o token...",
+    "authenticate": "Autenticar",
+    "logout": "Sair",
+    "completePreviousSteps": "Complete as etapas anteriores primeiro"
+  },
+  "workflow": {
+    "title": "Lista de verificação do fluxo de trabalho:",
+    "currentStep": "Etapa Atual",
+    "steps": {
+      "authenticate": "Autenticar com token de portador",
+      "initializeConsultation": "Inicializar consulta no sistema externo",
+      "startRecording": "Iniciar gravação na interface Telepatia",
+      "endRecording": "Finalizar gravação na interface Telepatia",
+      "confirmPatient": "Confirmar informações do paciente na interface Telepatia",
+      "importScribe": "Importar sessão de transcrição para o prontuário médico",
+      "completed": "Fluxo de trabalho concluído"
+    }
+  },
+  "externalSystem": {
+    "title": "Interface do Sistema Externo",
+    "initializeConsult": "Inicializar Consulta",
+    "clickToInitialize": "Clique abaixo para inicializar a consulta para:",
+    "name": "Nome",
+    "country": "País",
+    "idType": "Tipo de ID",
+    "idValue": "Valor do ID",
+    "initializeButton": "Inicializar Consulta para o Paciente",
+    "patientInformation": "Informações do Paciente",
+    "idCountry": "País do ID",
+    "medicalRecord": "Prontuário Médico",
+    "importScribeSession": "Importar Sessão de Transcrição",
+    "medicalNotesPlaceholder": "As notas médicas aparecerão aqui após importar a sessão de transcrição...",
+    "startNewWorkflow": "Iniciar Novo Fluxo de Trabalho",
+    "resetWorkflow": "Reiniciar Fluxo de Trabalho",
+    "chiefComplaint": "Queixa Principal",
+    "historyOfPresentIllness": "História da Doença Atual",
+    "physicalExamination": "Exame Físico",
+    "vitalSigns": "Sinais Vitais",
+    "general": "Geral",
+    "cardiovascular": "Cardiovascular",
+    "respiratory": "Respiratório",
+    "neurological": "Neurológico",
+    "assessmentAndPlan": "Avaliação e Plano"
+  },
+  "telepatia": {
+    "title": "Interface Telepatia",
+    "recording": {
+      "start": "Iniciar Gravação",
+      "end": "Finalizar Gravação",
+      "status": "Gravando...",
+      "simulatedDuration": "Duração da gravação simulada",
+      "resume": "Retomar",
+      "pause": "Pausar",
+      "discard": "Descartar",
+      "finish": "Finalizar",
+      "paused": "Pausado"
+    },
+    "patient": {
+      "confirmTitle": "Confirmar Informações do Paciente",
+      "confirmMessage": "Por favor, confirme ou atualize as informações do paciente:",
+      "name": "Nome",
+      "country": "País",
+      "idType": "Tipo de ID",
+      "idNumber": "Número do ID",
+      "confirm": "Confirmar Paciente",
+      "cancel": "Cancelar",
+      "createNew": "Criar Novo Paciente",
+      "searchExisting": "Buscar Pacientes Existentes",
+      "reassignTitle": "Reatribuir Paciente",
+      "reassignMessage": "Por favor, selecione ou crie um paciente para esta sessão:",
+      "reassign": "Reatribuir",
+      "currentPatient": "Paciente Atual"
+    },
+    "sessions": {
+      "title": "Selecionar Sessão de Transcrição",
+      "selectMessage": "Selecione uma sessão para importar para o prontuário médico:",
+      "duration": "Duração",
+      "seconds": "segundos",
+      "select": "Selecionar",
+      "close": "Fechar"
+    },
+    "errors": {
+      "title": "Erro",
+      "noSessionFound": "Nenhuma sessão encontrada para o paciente",
+      "dismiss": "Descartar"
+    }
+  },
+  "countries": {
+    "colombia": "Colômbia",
+    "mexico": "México",
+    "peru": "Peru",
+    "argentina": "Argentina",
+    "chile": "Chile",
+    "ecuador": "Equador",
+    "venezuela": "Venezuela"
+  },
+  "idTypes": {
+    "cc": "Cartão de Cidadania",
+    "ce": "Cédula de Estrangeiro",
+    "passport": "Passaporte",
+    "ti": "Carteira de Identidade",
+    "rc": "Registro Civil",
+    "nit": "NIT"
+  }
+}

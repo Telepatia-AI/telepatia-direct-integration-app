@@ -1,0 +1,109 @@
+{
+  "header": {
+    "warning": "*** Este es un entorno de prueba de integración directa - no graba realmente y el registro médico resultante está predefinido ***",
+    "bearerToken": "Token de Portador:",
+    "enterToken": "Ingrese el token...",
+    "authenticate": "Autenticar",
+    "logout": "Cerrar sesión",
+    "completePreviousSteps": "Complete los pasos anteriores primero"
+  },
+  "workflow": {
+    "title": "Lista de verificación del flujo de trabajo:",
+    "currentStep": "Paso actual",
+    "steps": {
+      "authenticate": "Autenticarse con token de portador",
+      "initializeConsultation": "Inicializar consulta en el sistema externo",
+      "startRecording": "Iniciar grabación en la interfaz de Telepatía",
+      "endRecording": "Finalizar grabación en la interfaz de Telepatía",
+      "confirmPatient": "Confirmar información del paciente en la interfaz de Telepatía",
+      "importScribe": "Importar sesión de transcripción al registro médico",
+      "completed": "Flujo de trabajo completado"
+    }
+  },
+  "externalSystem": {
+    "title": "Interfaz del Sistema Externo",
+    "initializeConsult": "Inicializar Consulta",
+    "clickToInitialize": "Haga clic abajo para inicializar la consulta para:",
+    "name": "Nombre",
+    "country": "País",
+    "idType": "Tipo de ID",
+    "idValue": "Valor de ID",
+    "initializeButton": "Inicializar consulta para el paciente",
+    "patientInformation": "Información del Paciente",
+    "idCountry": "País del ID",
+    "medicalRecord": "Registro Médico",
+    "importScribeSession": "Importar Sesión de Transcripción",
+    "medicalNotesPlaceholder": "Las notas médicas aparecerán aquí después de importar la sesión de transcripción...",
+    "startNewWorkflow": "Iniciar Nuevo Flujo de Trabajo",
+    "resetWorkflow": "Reiniciar Flujo de Trabajo",
+    "chiefComplaint": "Motivo de Consulta",
+    "historyOfPresentIllness": "Historia de la Enfermedad Actual",
+    "physicalExamination": "Examen Físico",
+    "vitalSigns": "Signos Vitales",
+    "general": "General",
+    "cardiovascular": "Cardiovascular",
+    "respiratory": "Respiratorio",
+    "neurological": "Neurológico",
+    "assessmentAndPlan": "Evaluación y Plan"
+  },
+  "telepatia": {
+    "title": "Interfaz de Telepatía",
+    "recording": {
+      "start": "Iniciar Grabación",
+      "end": "Finalizar Grabación",
+      "status": "Grabando...",
+      "simulatedDuration": "Duración de grabación simulada",
+      "resume": "Reanudar",
+      "pause": "Pausar",
+      "discard": "Descartar",
+      "finish": "Finalizar",
+      "paused": "Pausado"
+    },
+    "patient": {
+      "confirmTitle": "Confirmar Información del Paciente",
+      "confirmMessage": "Por favor confirme o actualice la información del paciente:",
+      "name": "Nombre",
+      "country": "País",
+      "idType": "Tipo de ID",
+      "idNumber": "Número de ID",
+      "confirm": "Confirmar Paciente",
+      "cancel": "Cancelar",
+      "createNew": "Crear Nuevo Paciente",
+      "searchExisting": "Buscar Pacientes Existentes",
+      "reassignTitle": "Reasignar Paciente",
+      "reassignMessage": "Por favor seleccione o cree un paciente para esta sesión:",
+      "reassign": "Reasignar",
+      "currentPatient": "Paciente Actual"
+    },
+    "sessions": {
+      "title": "Seleccionar Sesión de Transcripción",
+      "selectMessage": "Seleccione una sesión para importar al registro médico:",
+      "duration": "Duración",
+      "seconds": "segundos",
+      "select": "Seleccionar",
+      "close": "Cerrar"
+    },
+    "errors": {
+      "title": "Error",
+      "noSessionFound": "No se encontró sesión para el paciente",
+      "dismiss": "Descartar"
+    }
+  },
+  "countries": {
+    "colombia": "Colombia",
+    "mexico": "México",
+    "peru": "Perú",
+    "argentina": "Argentina",
+    "chile": "Chile",
+    "ecuador": "Ecuador",
+    "venezuela": "Venezuela"
+  },
+  "idTypes": {
+    "cc": "Cédula de Ciudadanía",
+    "ce": "Cédula de Extranjería",
+    "passport": "Pasaporte",
+    "ti": "Tarjeta de Identidad",
+    "rc": "Registro Civil",
+    "nit": "NIT"
+  }
+}

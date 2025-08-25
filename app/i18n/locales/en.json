@@ -1,0 +1,109 @@
+{
+  "header": {
+    "warning": "*** This is a direct integration test environment - it doesn't actually record and the resulting medical record is predefined ***",
+    "bearerToken": "Bearer Token:",
+    "enterToken": "Enter token...",
+    "authenticate": "Authenticate",
+    "logout": "Logout",
+    "completePreviousSteps": "Complete previous steps first"
+  },
+  "workflow": {
+    "title": "Workflow Checklist:",
+    "currentStep": "Current Step",
+    "steps": {
+      "authenticate": "Authenticate with Bearer token",
+      "initializeConsultation": "Initialize consultation in external system",
+      "startRecording": "Start recording in Telepatia interface",
+      "endRecording": "End recording in Telepatia interface",
+      "confirmPatient": "Confirm patient information in Telepatia interface",
+      "importScribe": "Import scribe session to medical record",
+      "completed": "Workflow completed"
+    }
+  },
+  "externalSystem": {
+    "title": "External System Interface",
+    "initializeConsult": "Initialize Consult",
+    "clickToInitialize": "Click below to initialize consultation for:",
+    "name": "Name",
+    "country": "Country",
+    "idType": "ID Type",
+    "idValue": "ID Value",
+    "initializeButton": "Initialize Consult for Patient",
+    "patientInformation": "Patient Information",
+    "idCountry": "ID Country",
+    "medicalRecord": "Medical Record",
+    "importScribeSession": "Import Scribe Session",
+    "medicalNotesPlaceholder": "Medical notes will appear here after importing scribe session...",
+    "startNewWorkflow": "Start New Workflow",
+    "resetWorkflow": "Reset Workflow",
+    "chiefComplaint": "Chief Complaint",
+    "historyOfPresentIllness": "History of Present Illness",
+    "physicalExamination": "Physical Examination",
+    "vitalSigns": "Vital Signs",
+    "general": "General",
+    "cardiovascular": "Cardiovascular",
+    "respiratory": "Respiratory",
+    "neurological": "Neurological",
+    "assessmentAndPlan": "Assessment & Plan"
+  },
+  "telepatia": {
+    "title": "Telepatia Interface",
+    "recording": {
+      "start": "Start Recording",
+      "end": "End Recording",
+      "status": "Recording...",
+      "simulatedDuration": "Simulated recording duration",
+      "resume": "Resume",
+      "pause": "Pause",
+      "discard": "Discard",
+      "finish": "Finish",
+      "paused": "Paused"
+    },
+    "patient": {
+      "confirmTitle": "Confirm Patient Information",
+      "confirmMessage": "Please confirm or update the patient information:",
+      "name": "Name",
+      "country": "Country",
+      "idType": "ID Type",
+      "idNumber": "ID Number",
+      "confirm": "Confirm Patient",
+      "cancel": "Cancel",
+      "createNew": "Create New Patient",
+      "searchExisting": "Search Existing Patients",
+      "reassignTitle": "Reassign Patient",
+      "reassignMessage": "Please select or create a patient for this session:",
+      "reassign": "Reassign",
+      "currentPatient": "Current Patient"
+    },
+    "sessions": {
+      "title": "Select Scribe Session",
+      "selectMessage": "Select a session to import to the medical record:",
+      "duration": "Duration",
+      "seconds": "seconds",
+      "select": "Select",
+      "close": "Close"
+    },
+    "errors": {
+      "title": "Error",
+      "noSessionFound": "No session found for patient",
+      "dismiss": "Dismiss"
+    }
+  },
+  "countries": {
+    "colombia": "Colombia",
+    "mexico": "Mexico",
+    "peru": "Peru",
+    "argentina": "Argentina",
+    "chile": "Chile",
+    "ecuador": "Ecuador",
+    "venezuela": "Venezuela"
+  },
+  "idTypes": {
+    "cc": "Citizenship Card",
+    "ce": "Foreign ID",
+    "passport": "Passport",
+    "ti": "Identity Card",
+    "rc": "Civil Registry",
+    "nit": "Tax ID"
+  }
+}
