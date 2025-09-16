@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { X, UserX } from 'lucide-react'
 
@@ -19,6 +20,7 @@ export default function DisableReasonModal({
   isSubmitting,
   doctorName
 }: DisableReasonModalProps) {
+  const { t } = useTranslation()
   const [reason, setReason] = useState('')
   const [error, setError] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement>(null)

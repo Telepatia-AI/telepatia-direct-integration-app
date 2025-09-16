@@ -114,5 +114,94 @@
     "ti": "Carteira de Identidade",
     "rc": "Registro Civil",
     "nit": "NIT"
+  },
+  "tabs": {
+    "integration": "Teste de Integração",
+    "doctors": "Gestão de Médicos"
+  },
+  "integration": {
+    "title": "Testes de Integração",
+    "description": "Teste o fluxo de trabalho completo entre Telepatia e seu sistema externo",
+    "testEnvironment": "Ambiente de Teste",
+    "statusCard": {
+      "title": "Status de Integração",
+      "authenticated": "Autenticado",
+      "notAuthenticated": "Não Autenticado",
+      "currentStep": "Etapa Atual"
+    },
+    "instructions": {
+      "title": "Guia de Início Rápido",
+      "step1": "Autentique-se com seu token Bearer",
+      "step2": "Inicialize uma consulta de paciente",
+      "step3": "Grave a sessão médica",
+      "step4": "Importe as notas transcritas"
+    }
+  },
+  "doctors": {
+    "title": "Gestão de Médicos",
+    "description": "Gerencie contas e permissões de médicos",
+    "apiKeySection": {
+      "title": "Configuração da API",
+      "enterApiKey": "Digite sua chave API para gerenciar médicos",
+      "apiKey": "Chave API",
+      "placeholder": "Digite sua chave API...",
+      "saveKey": "Salvar Chave API",
+      "show": "Mostrar",
+      "hide": "Ocultar",
+      "invalidKey": "Chave API inválida. Por favor, verifique e tente novamente."
+    },
+    "table": {
+      "name": "Nome",
+      "email": "E-mail",
+      "status": "Status",
+      "createdAt": "Data de Criação",
+      "actions": "Ações",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "noResults": "Nenhum médico encontrado",
+      "loading": "Carregando médicos...",
+      "error": "Erro ao carregar médicos"
+    },
+    "actions": {
+      "create": "Criar Médico",
+      "enable": "Habilitar",
+      "disable": "Desabilitar",
+      "refresh": "Atualizar",
+      "search": "Buscar médicos...",
+      "filter": "Filtrar",
+      "export": "Exportar",
+      "resetPassword": "Redefinir Senha",
+      "viewDetails": "Ver Detalhes"
+    },
+    "createModal": {
+      "title": "Criar Nova Conta de Médico",
+      "description": "Digite as informações do médico para criar uma nova conta",
+      "firstName": "Nome",
+      "lastName": "Sobrenome",
+      "email": "Endereço de E-mail",
+      "password": "Senha",
+      "confirmPassword": "Confirmar Senha",
+      "cancel": "Cancelar",
+      "create": "Criar Conta",
+      "creating": "Criando...",
+      "success": "Conta de médico criada com sucesso",
+      "error": "Erro ao criar conta de médico"
+    },
+    "disableModal": {
+      "title": "Desabilitar Conta de Médico",
+      "description": "Por favor, forneça um motivo para desabilitar esta conta",
+      "reason": "Motivo",
+      "placeholder": "Digite o motivo para desabilitar...",
+      "cancel": "Cancelar",
+      "confirm": "Confirmar Desabilitação",
+      "disabling": "Desabilitando...",
+      "success": "Conta de médico desabilitada com sucesso",
+      "error": "Erro ao desabilitar conta de médico"
+    },
+    "stats": {
+      "total": "Total de Médicos",
+      "active": "Ativos",
+      "inactive": "Inativos"
+    }
   }
 }

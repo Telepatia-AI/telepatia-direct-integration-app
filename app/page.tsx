@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import Header from './components/shared/Header'
 import LanguageSwitcher from './components/shared/LanguageSwitcher'
 import IntegrationView from './components/integration/IntegrationView'
@@ -9,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Users, TestTube2 } from 'lucide-react'
 
 export default function Home() {
+  const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState('integration')
 
   return (
@@ -24,11 +26,11 @@ export default function Home() {
             <TabsList className="grid w-fit grid-cols-2 gap-4">
               <TabsTrigger value="integration" className="flex items-center gap-2">
                 <TestTube2 className="h-4 w-4" />
-                Prueba de Integración
+                {t('tabs.integration')}
               </TabsTrigger>
               <TabsTrigger value="doctors" className="flex items-center gap-2">
                 <Users className="h-4 w-4" />
-                Gestión de Doctores
+                {t('tabs.doctors')}
               </TabsTrigger>
             </TabsList>
             <LanguageSwitcher />

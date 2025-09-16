@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
@@ -23,6 +24,8 @@ interface DoctorsManagementState {
 }
 
 export default function DoctorsManagement() {
+  const { t } = useTranslation()
+
   // API Key management
   const [apiKey, setApiKey] = useState('')
   const [showApiKey, setShowApiKey] = useState(false)
@@ -354,9 +357,9 @@ export default function DoctorsManagement() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold tracking-tight">Gestión de Doctores</h2>
+        <h2 className="text-3xl font-bold tracking-tight">{t('doctors.title')}</h2>
         <p className="text-gray-600">
-          Administre las cuentas de doctores y monitoree su actividad de integración
+          {t('doctors.description')}
         </p>
       </div>
 
@@ -365,17 +368,17 @@ export default function DoctorsManagement() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Key className="h-5 w-5" />
-            UZUI API Key
+            {t('doctors.apiKeySection.apiKey')}
           </CardTitle>
           <CardDescription>
-            Enter your UZUI API key to access the doctor management features.
+            {t('doctors.apiKeySection.enterApiKey')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleApiKeySubmit} className="flex items-end gap-3">
             <div className="flex-1">
               <label htmlFor="api-key" className="block text-sm font-medium text-gray-700 mb-1">
-                API Key
+                {t('doctors.apiKeySection.apiKey')}
               </label>
               <div className="relative">
                 <input
@@ -383,7 +386,7 @@ export default function DoctorsManagement() {
                   type={showApiKey ? 'text' : 'password'}
                   value={apiKey}
                   onChange={(e) => setApiKey(e.target.value)}
-                  placeholder="Enter your UZUI API key..."
+                  placeholder={t('doctors.apiKeySection.placeholder')}
                   className={`w-full px-3 py-2 pr-10 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                     apiKeyError ? 'border-red-300 bg-red-50' : 'border-gray-300'
                   }`}
@@ -402,11 +405,11 @@ export default function DoctorsManagement() {
             </div>
             <Button type="submit" disabled={!apiKey.trim() || state.isLoading}>
               {state.isLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-              Connect
+              {t('doctors.apiKeySection.saveKey')}
             </Button>
             {apiKey && (
               <Button type="button" variant="outline" onClick={clearApiKey}>
-                Clear
+                {t('doctors.apiKeySection.hide')}
               </Button>
             )}
           </form>
@@ -419,10 +422,10 @@ export default function DoctorsManagement() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-blue-700">
               <UserPlus className="h-5 w-5" />
-              Create New Doctor Account
+              {t('doctors.createModal.title')}
             </CardTitle>
             <CardDescription>
-              Add a new doctor to your institution with their own account and API key.
+              {t('doctors.createModal.description')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -442,7 +445,7 @@ export default function DoctorsManagement() {
                 className="bg-blue-600 hover:bg-blue-700 text-white"
               >
                 <UserPlus className="h-4 w-4 mr-2" />
-                Create Doctor
+                {t('doctors.actions.create')}
               </Button>
             </div>
           </CardContent>
@@ -455,7 +458,7 @@ export default function DoctorsManagement() {
           <CardContent className="py-12">
             <div className="text-center text-gray-500">
               <Key className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-              <p>Please enter your UZUI API key to view and manage doctors.</p>
+              <p>{t('doctors.apiKeySection.enterApiKey')}</p>
             </div>
           </CardContent>
         </Card>
@@ -465,33 +468,33 @@ export default function DoctorsManagement() {
           <div className="grid gap-4 md:grid-cols-3">
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium">Total de Doctores</CardTitle>
+                <CardTitle className="text-sm font-medium">{t('doctors.stats.total')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{state.total}</div>
                 <p className="text-xs text-gray-600">
-                  Registrados en el sistema
+                  {t('doctors.table.noResults')}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium">Doctores Activos</CardTitle>
+                <CardTitle className="text-sm font-medium">{t('doctors.stats.active')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-green-600">
                   {state.doctors.filter(d => d.isEnabled).length}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Actualmente habilitados
+                  {t('doctors.table.active')}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium">Doctores Inactivos</CardTitle>
+                <CardTitle className="text-sm font-medium">{t('doctors.stats.inactive')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-gray-400">

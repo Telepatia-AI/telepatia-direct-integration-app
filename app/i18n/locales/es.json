@@ -114,5 +114,94 @@
     "ti": "Tarjeta de Identidad",
     "rc": "Registro Civil",
     "nit": "NIT"
+  },
+  "tabs": {
+    "integration": "Prueba de Integración",
+    "doctors": "Gestión de Doctores"
+  },
+  "integration": {
+    "title": "Pruebas de Integración",
+    "description": "Prueba el flujo de trabajo completo entre Telepatia y tu sistema externo",
+    "testEnvironment": "Entorno de Prueba",
+    "statusCard": {
+      "title": "Estado de Integración",
+      "authenticated": "Autenticado",
+      "notAuthenticated": "No Autenticado",
+      "currentStep": "Paso Actual"
+    },
+    "instructions": {
+      "title": "Guía de Inicio Rápido",
+      "step1": "Autentícate con tu token Bearer",
+      "step2": "Inicializa una consulta de paciente",
+      "step3": "Graba la sesión médica",
+      "step4": "Importa las notas transcritas"
+    }
+  },
+  "doctors": {
+    "title": "Gestión de Doctores",
+    "description": "Administra cuentas y permisos de doctores",
+    "apiKeySection": {
+      "title": "Configuración de API",
+      "enterApiKey": "Ingresa tu clave API para gestionar doctores",
+      "apiKey": "Clave API",
+      "placeholder": "Ingresa tu clave API...",
+      "saveKey": "Guardar Clave API",
+      "show": "Mostrar",
+      "hide": "Ocultar",
+      "invalidKey": "Clave API inválida. Por favor verifica e intenta nuevamente."
+    },
+    "table": {
+      "name": "Nombre",
+      "email": "Correo Electrónico",
+      "status": "Estado",
+      "createdAt": "Fecha de Creación",
+      "actions": "Acciones",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "noResults": "No se encontraron doctores",
+      "loading": "Cargando doctores...",
+      "error": "Error al cargar doctores"
+    },
+    "actions": {
+      "create": "Crear Doctor",
+      "enable": "Habilitar",
+      "disable": "Deshabilitar",
+      "refresh": "Actualizar",
+      "search": "Buscar doctores...",
+      "filter": "Filtrar",
+      "export": "Exportar",
+      "resetPassword": "Restablecer Contraseña",
+      "viewDetails": "Ver Detalles"
+    },
+    "createModal": {
+      "title": "Crear Nueva Cuenta de Doctor",
+      "description": "Ingresa la información del doctor para crear una nueva cuenta",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "email": "Dirección de Correo",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar Contraseña",
+      "cancel": "Cancelar",
+      "create": "Crear Cuenta",
+      "creating": "Creando...",
+      "success": "Cuenta de doctor creada exitosamente",
+      "error": "Error al crear cuenta de doctor"
+    },
+    "disableModal": {
+      "title": "Deshabilitar Cuenta de Doctor",
+      "description": "Por favor proporciona una razón para deshabilitar esta cuenta",
+      "reason": "Razón",
+      "placeholder": "Ingresa razón para deshabilitar...",
+      "cancel": "Cancelar",
+      "confirm": "Confirmar Deshabilitación",
+      "disabling": "Deshabilitando...",
+      "success": "Cuenta de doctor deshabilitada exitosamente",
+      "error": "Error al deshabilitar cuenta de doctor"
+    },
+    "stats": {
+      "total": "Total de Doctores",
+      "active": "Activos",
+      "inactive": "Inactivos"
+    }
   }
 }

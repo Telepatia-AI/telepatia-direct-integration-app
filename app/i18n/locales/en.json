@@ -114,5 +114,94 @@
     "ti": "Identity Card",
     "rc": "Civil Registry",
     "nit": "Tax ID"
+  },
+  "tabs": {
+    "integration": "Integration Test",
+    "doctors": "Doctor Management"
+  },
+  "integration": {
+    "title": "Integration Testing",
+    "description": "Test the complete workflow between Telepatia and your external system",
+    "testEnvironment": "Test Environment",
+    "statusCard": {
+      "title": "Integration Status",
+      "authenticated": "Authenticated",
+      "notAuthenticated": "Not Authenticated",
+      "currentStep": "Current Step"
+    },
+    "instructions": {
+      "title": "Quick Start Guide",
+      "step1": "Authenticate with your Bearer token",
+      "step2": "Initialize a patient consultation",
+      "step3": "Record the medical session",
+      "step4": "Import the transcribed notes"
+    }
+  },
+  "doctors": {
+    "title": "Doctor Management",
+    "description": "Manage doctor accounts and permissions",
+    "apiKeySection": {
+      "title": "API Configuration",
+      "enterApiKey": "Enter your API key to manage doctors",
+      "apiKey": "API Key",
+      "placeholder": "Enter your API key...",
+      "saveKey": "Save API Key",
+      "show": "Show",
+      "hide": "Hide",
+      "invalidKey": "Invalid API key. Please check and try again."
+    },
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "status": "Status",
+      "createdAt": "Created At",
+      "actions": "Actions",
+      "active": "Active",
+      "inactive": "Inactive",
+      "noResults": "No doctors found",
+      "loading": "Loading doctors...",
+      "error": "Error loading doctors"
+    },
+    "actions": {
+      "create": "Create Doctor",
+      "enable": "Enable",
+      "disable": "Disable",
+      "refresh": "Refresh",
+      "search": "Search doctors...",
+      "filter": "Filter",
+      "export": "Export",
+      "resetPassword": "Reset Password",
+      "viewDetails": "View Details"
+    },
+    "createModal": {
+      "title": "Create New Doctor Account",
+      "description": "Enter the doctor's information to create a new account",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email Address",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "cancel": "Cancel",
+      "create": "Create Account",
+      "creating": "Creating...",
+      "success": "Doctor account created successfully",
+      "error": "Failed to create doctor account"
+    },
+    "disableModal": {
+      "title": "Disable Doctor Account",
+      "description": "Please provide a reason for disabling this account",
+      "reason": "Reason",
+      "placeholder": "Enter reason for disabling...",
+      "cancel": "Cancel",
+      "confirm": "Confirm Disable",
+      "disabling": "Disabling...",
+      "success": "Doctor account disabled successfully",
+      "error": "Failed to disable doctor account"
+    },
+    "stats": {
+      "total": "Total Doctors",
+      "active": "Active",
+      "inactive": "Inactive"
+    }
   }
 }

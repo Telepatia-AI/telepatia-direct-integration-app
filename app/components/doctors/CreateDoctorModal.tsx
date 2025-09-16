@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { X, UserPlus, Eye, EyeOff, Check, Copy } from 'lucide-react'
 import { CreateDoctorAccountRequest, DOCTOR_SPECIALTIES } from '@/app/types'
@@ -24,6 +25,7 @@ export default function CreateDoctorModal({
   isSubmitting,
   createdAccount
 }: CreateDoctorModalProps) {
+  const { t } = useTranslation()
   const [formData, setFormData] = useState<CreateDoctorAccountRequest>({
     email: '',
     password: '',
