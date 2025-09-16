@@ -18,8 +18,6 @@ export default function ConfirmPatientModal({
 }: ConfirmPatientModalProps) {
   const { t } = useTranslation()
   const {
-    recordingTime,
-    recordingStartTime,
     sessions,
     setSessions,
     setSelectedSession,
@@ -29,11 +27,12 @@ export default function ConfirmPatientModal({
   const handleConfirmPatient = (useInfo: boolean) => {
     setShowConfirmModal(false)
     
+    const currentTime = new Date()
     const newSession: Session = {
       id: Date.now().toString(),
-      patientName: useInfo && patientInfo ? patientInfo.name : `Patient ${recordingStartTime?.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }) || ''}`,
-      startTime: recordingStartTime?.toISOString() || new Date().toISOString(),
-      duration: recordingTime,
+      patientName: useInfo && patientInfo ? patientInfo.name : `Patient ${currentTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}`,
+      startTime: currentTime.toISOString(),
+      duration: 0, // Duration will be set by external scribe
       patientInfo: useInfo && patientInfo ? patientInfo : undefined
     }
     

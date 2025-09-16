@@ -1,4 +1,4 @@
-import { PatientInfo } from '@/app/types'
+import { PatientInfo, Doctor, DoctorListResponse, DoctorListFilters, UpdateDoctorStatusRequest, UpdateDoctorStatusResponse, CreateDoctorAccountRequest, CreateDoctorAccountResponse } from '@/app/types'
 import { FindPatientSessionsRequestDto, FindPatientSessionsResponseDto } from '@/app/types/patient-sessions-dto'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://uzui-alb-1991166989.us-east-2.elb.amazonaws.com'
@@ -184,6 +184,199 @@ export class ExternalSystemAPI {
     }
 
     return scribeNote
+  }
+
+  // Doctor management methods
+  async listDoctors(filters: DoctorListFilters = {}): Promise<ApiResponse<DoctorListResponse>> {
+    try {
+      const params = new URLSearchParams()
+      
+      if (filters.status) params.append('status', filters.status)
+      if (filters.specialty) params.append('specialty', filters.specialty)
+      if (filters.page) params.append('page', filters.page.toString())
+      if (filters.limit) params.append('limit', filters.limit.toString())
+      
+      const queryString = params.toString()
+      const url = `${API_BASE_URL}/api/institutionals/doctors${queryString ? '?' + queryString : ''}`
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${this.bearerToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text().catch(() => '')
+        let errorMessage = `Failed to fetch doctors: ${response.status} ${response.statusText}`
+        
+        if (response.status === 401) {
+          errorMessage = 'Invalid API key. Please check your credentials.'
+        } else if (response.status === 403) {
+          errorMessage = 'Access forbidden. You do not have permission to view doctors.'
+        } else if (response.status === 429) {
+          errorMessage = 'Too many requests. Please wait before trying again.'
+        } else if (response.status >= 500) {
+          errorMessage = 'Server error. Please try again later.'
+        } else if (errorText) {
+          try {
+            const errorJson = JSON.parse(errorText)
+            errorMessage = errorJson.message || errorMessage
+          } catch {
+            // Keep default message if error text is not valid JSON
+          }
+        }
+        
+        return {
+          success: false,
+          error: errorMessage
+        }
+      }
+
+      const data: DoctorListResponse = await response.json()
+      
+      // Apply client-side search filter if provided (since API might not support it)
+      if (filters.search && data.doctors) {
+        const searchTerm = filters.search.toLowerCase()
+        data.doctors = data.doctors.filter(doctor => 
+          doctor.nameFull?.toLowerCase().includes(searchTerm) ||
+          doctor.email?.toLowerCase().includes(searchTerm)
+        )
+      }
+      
+      return {
+        success: true,
+        data
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to fetch doctors'
+      }
+    }
+  }
+
+  async updateDoctorStatus(
+    doctorId: string, 
+    enabled: boolean, 
+    reason?: string
+  ): Promise<ApiResponse<UpdateDoctorStatusResponse>> {
+    try {
+      const payload: UpdateDoctorStatusRequest = {
+        enabled
+      }
+      
+      if (!enabled && reason) {
+        payload.reason = reason
+      }
+
+      const response = await fetch(`${API_BASE_URL}/api/institutionals/accounts/${doctorId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${this.bearerToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text().catch(() => '')
+        let errorMessage = `Failed to update doctor status: ${response.status} ${response.statusText}`
+        
+        if (response.status === 400) {
+          try {
+            const errorJson = JSON.parse(errorText)
+            errorMessage = errorJson.message || 'Invalid request. Please check the provided data.'
+          } catch {
+            errorMessage = 'Invalid request. Please check the provided data.'
+          }
+        } else if (response.status === 401) {
+          errorMessage = 'Invalid API key. Please check your credentials.'
+        } else if (response.status === 403) {
+          errorMessage = 'Access forbidden. Cannot update doctors from other institutions.'
+        } else if (response.status === 404) {
+          errorMessage = 'Doctor not found.'
+        } else if (response.status >= 500) {
+          errorMessage = 'Server error. Please try again later.'
+        }
+        
+        return {
+          success: false,
+          error: errorMessage
+        }
+      }
+
+      const data: UpdateDoctorStatusResponse = await response.json()
+      return {
+        success: true,
+        data
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to update doctor status'
+      }
+    }
+  }
+
+  async createDoctorAccount(accountData: CreateDoctorAccountRequest): Promise<ApiResponse<CreateDoctorAccountResponse>> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/institutionals/accounts`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${this.bearerToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(accountData)
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text().catch(() => '')
+        let errorMessage = `Failed to create doctor account: ${response.status} ${response.statusText}`
+        
+        if (response.status === 400) {
+          try {
+            const errorJson = JSON.parse(errorText)
+            if (errorJson.message) {
+              if (Array.isArray(errorJson.message)) {
+                errorMessage = errorJson.message.join(', ')
+              } else {
+                errorMessage = errorJson.message
+              }
+            } else {
+              errorMessage = 'Invalid request. Please check the provided data.'
+            }
+          } catch {
+            errorMessage = 'Invalid request. Please check the provided data.'
+          }
+        } else if (response.status === 401) {
+          errorMessage = 'Invalid API key. Please check your credentials.'
+        } else if (response.status === 403) {
+          errorMessage = 'Access forbidden. You do not have permission to create doctor accounts.'
+        } else if (response.status === 409) {
+          errorMessage = 'An account with this email already exists.'
+        } else if (response.status >= 500) {
+          errorMessage = 'Server error. Please try again later.'
+        }
+        
+        return {
+          success: false,
+          error: errorMessage
+        }
+      }
+
+      const data: CreateDoctorAccountResponse = await response.json()
+      return {
+        success: true,
+        data
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to create doctor account'
+      }
+    }
   }
 }
 

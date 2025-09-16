@@ -1,19 +1,9 @@
 'use client'
 
-import { createContext, useContext, useState, useRef, ReactNode } from 'react'
+import { createContext, useContext, useState, ReactNode } from 'react'
 import { Session, PatientInfo, WorkflowStep } from '@/app/types'
 
 interface TelepatiaContextType {
-  // Recording states
-  isRecording: boolean
-  setIsRecording: (value: boolean) => void
-  isPaused: boolean
-  setIsPaused: (value: boolean) => void
-  recordingTime: number
-  setRecordingTime: (value: number) => void
-  recordingStartTime: Date | null
-  setRecordingStartTime: (value: Date | null) => void
-  
   // Modal states
   showConfirmModal: boolean
   setShowConfirmModal: (value: boolean) => void
@@ -44,9 +34,6 @@ interface TelepatiaContextType {
     idValue: string
   }
   setNewPatientForm: (value: any) => void
-  
-  // Timer ref
-  intervalRef: React.MutableRefObject<NodeJS.Timeout | null>
 }
 
 const TelepatiaContext = createContext<TelepatiaContextType | undefined>(undefined)
@@ -64,12 +51,6 @@ interface TelepatiaProviderProps {
 }
 
 export function TelepatiaProvider({ children }: TelepatiaProviderProps) {
-  // Recording states
-  const [isRecording, setIsRecording] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
-  const [recordingTime, setRecordingTime] = useState(0)
-  const [recordingStartTime, setRecordingStartTime] = useState<Date | null>(null)
-  
   // Modal states
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [showErrorModal, setShowErrorModal] = useState(false)
@@ -108,18 +89,7 @@ export function TelepatiaProvider({ children }: TelepatiaProviderProps) {
     idValue: ''
   })
   
-  // Timer ref
-  const intervalRef = useRef<NodeJS.Timeout | null>(null)
-  
   const value: TelepatiaContextType = {
-    isRecording,
-    setIsRecording,
-    isPaused,
-    setIsPaused,
-    recordingTime,
-    setRecordingTime,
-    recordingStartTime,
-    setRecordingStartTime,
     showConfirmModal,
     setShowConfirmModal,
     showErrorModal,
@@ -139,8 +109,7 @@ export function TelepatiaProvider({ children }: TelepatiaProviderProps) {
     reassignSession,
     setReassignSession,
     newPatientForm,
-    setNewPatientForm,
-    intervalRef
+    setNewPatientForm
   }
   
   return (

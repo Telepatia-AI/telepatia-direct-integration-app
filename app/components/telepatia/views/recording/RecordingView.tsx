@@ -1,9 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useTelepatia } from '../../context/TelepatiaContext'
-import { WorkflowStep } from '@/app/types'
 import { useTranslation } from 'react-i18next'
+import { WorkflowStep } from '@/app/types'
 
 interface RecordingViewProps {
   currentStep: WorkflowStep
@@ -12,134 +10,112 @@ interface RecordingViewProps {
 
 export default function RecordingView({ currentStep, setCurrentStep }: RecordingViewProps) {
   const { t } = useTranslation()
-  const {
-    isRecording,
-    setIsRecording,
-    isPaused,
-    setIsPaused,
-    recordingTime,
-    setRecordingTime,
-    setRecordingStartTime,
-    setShowConfirmModal,
-    intervalRef
-  } = useTelepatia()
 
-  useEffect(() => {
-    if (isRecording && !isPaused) {
-      intervalRef.current = setInterval(() => {
-        setRecordingTime(prev => prev + 1)
-      }, 1000)
-    } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current)
-      }
-    }
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current)
-      }
-    }
-  }, [isRecording, isPaused, setRecordingTime, intervalRef])
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
-  }
-
-  const handleStart = () => {
+  const handleOpenScribe = () => {
+    // Open scribe.dev.telepatia.ai in a new tab/window
+    window.open('https://scribe.dev.telepatia.ai', '_blank', 'noopener,noreferrer')
+    
+    // Move to the next workflow step
     if (currentStep === WorkflowStep.START_RECORDING) {
-      setIsRecording(true)
-      setIsPaused(false)
-      setRecordingTime(0)
-      setRecordingStartTime(new Date())
       setCurrentStep(WorkflowStep.END_RECORDING)
     }
   }
 
-  const handlePause = () => {
-    setIsPaused(!isPaused)
-  }
-
-  const handleDiscard = () => {
-    setIsRecording(false)
-    setIsPaused(false)
-    setRecordingTime(0)
-    setCurrentStep(WorkflowStep.START_RECORDING)
-  }
-
-  const handleFinish = () => {
+  const handleMarkComplete = () => {
+    // Mark recording as complete and move to patient confirmation
     if (currentStep === WorkflowStep.END_RECORDING) {
-      setIsRecording(false)
-      setIsPaused(false)
       setCurrentStep(WorkflowStep.CONFIRM_PATIENT)
-      setShowConfirmModal(true)
     }
+  }
+
+  const handleSkipRecording = () => {
+    // Skip recording and move directly to patient confirmation
+    setCurrentStep(WorkflowStep.CONFIRM_PATIENT)
   }
 
   return (
     <div className="flex flex-col items-center space-y-6">
-      {/* Timer Display */}
-      <div className="text-6xl font-mono text-gray-700 mb-8">
-        {formatTime(recordingTime)}
+      {/* Scribe Link Section */}
+      <div className="text-center mb-8">
+        <div className="mb-4">
+          <h3 className="text-xl font-semibold text-gray-800 mb-2">
+            {t('telepatia.recording.externalTitle') || 'Record with Telepatia Scribe'}
+          </h3>
+          <p className="text-gray-600 mb-4">
+            {t('telepatia.recording.externalDescription') || 'Click the link below to open the Telepatia Scribe interface and record your consultation.'}
+          </p>
+        </div>
+
+        {/* Scribe Icon/Logo placeholder */}
+        <div className="mb-6">
+          <div className="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center">
+            <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            </svg>
+          </div>
+        </div>
       </div>
 
-      {/* Recording Controls */}
-      <div className="flex flex-col gap-4 w-full max-w-xs">
-        {!isRecording ? (
+      {/* Action Buttons */}
+      <div className="flex flex-col gap-4 w-full max-w-md">
+        {currentStep === WorkflowStep.START_RECORDING && (
           <button
-            onClick={handleStart}
-            disabled={currentStep !== WorkflowStep.START_RECORDING}
-            className={`font-semibold py-4 px-8 rounded-lg transition-colors ${
-              currentStep === WorkflowStep.START_RECORDING 
-                ? 'bg-green-500 hover:bg-green-600 text-white cursor-pointer' 
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            }`}
+            onClick={handleOpenScribe}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg transition-colors flex items-center justify-center gap-2"
           >
-            {t('telepatia.recording.start')}
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            {t('telepatia.recording.openScribe') || 'Open Telepatia Scribe'}
           </button>
-        ) : (
+        )}
+
+        {currentStep === WorkflowStep.END_RECORDING && (
           <>
+            <div className="text-center mb-4">
+              <p className="text-green-600 font-medium">
+                {t('telepatia.recording.recordingInProgress') || 'Recording session in progress...'}
+              </p>
+              <p className="text-gray-600 text-sm mt-1">
+                {t('telepatia.recording.completeInstructions') || 'Complete your recording in the Scribe interface, then click the button below.'}
+              </p>
+            </div>
+            
             <button
-              onClick={handlePause}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-8 rounded-lg transition-colors"
+              onClick={handleMarkComplete}
+              className="bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-8 rounded-lg transition-colors"
             >
-              {isPaused ? t('telepatia.recording.resume') || 'Resume' : t('telepatia.recording.pause') || 'Pause'}
+              {t('telepatia.recording.markComplete') || 'Mark Recording Complete'}
             </button>
             
             <button
-              onClick={handleDiscard}
-              className="bg-red-500 hover:bg-red-600 text-white font-semibold py-4 px-8 rounded-lg transition-colors"
+              onClick={handleOpenScribe}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2"
             >
-              {t('telepatia.recording.discard') || 'Discard'}
-            </button>
-            
-            <button
-              onClick={handleFinish}
-              disabled={currentStep !== WorkflowStep.END_RECORDING}
-              className={`font-semibold py-4 px-8 rounded-lg transition-colors ${
-                currentStep === WorkflowStep.END_RECORDING
-                  ? 'bg-purple-500 hover:bg-purple-600 text-white cursor-pointer'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              }`}
-            >
-              {t('telepatia.recording.finish') || 'Finish'}
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+              {t('telepatia.recording.reopenScribe') || 'Reopen Scribe'}
             </button>
           </>
         )}
+
+        {/* Skip option for demo purposes */}
+        <div className="mt-6 pt-4 border-t border-gray-200">
+          <button
+            onClick={handleSkipRecording}
+            className="w-full text-gray-500 hover:text-gray-700 py-2 text-sm transition-colors"
+          >
+            {t('telepatia.recording.skipForDemo') || 'Skip Recording (Demo Only)'}
+          </button>
+        </div>
       </div>
 
-      {/* Recording Status */}
-      <div className="mt-8">
-        {isRecording && (
-          <div className="flex items-center space-x-2">
-            <div className={`w-3 h-3 rounded-full ${isPaused ? 'bg-yellow-500' : 'bg-red-500 animate-pulse'}`}></div>
-            <span className="text-gray-600">
-              {isPaused ? (t('telepatia.recording.paused') || 'Paused') : (t('telepatia.recording.status') || 'Recording...')}
-            </span>
-          </div>
-        )}
+      {/* Help Text */}
+      <div className="mt-8 text-center max-w-md">
+        <p className="text-sm text-gray-500">
+          {t('telepatia.recording.helpText') || 'The Telepatia Scribe interface will open in a new tab. Complete your recording there and return here to continue the integration workflow.'}
+        </p>
       </div>
     </div>
   )

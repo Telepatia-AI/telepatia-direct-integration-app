@@ -1,4 +1,4 @@
-// File: C:\Users\andre\OneDrive\Desktop\Telepatia\telepatia-direct-integration-app\app\layout.tsx
+// File: /Users/alejandrocastanopalacio/Developer/API_externa_telepatia/telepatia-direct-integration-app/app/layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

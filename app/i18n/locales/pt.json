@@ -1,6 +1,6 @@
 {
   "header": {
-    "warning": "*** Este é um ambiente de teste de integração direta - não grava realmente e o prontuário médico resultante é predefinido ***",
+    "warning": "*** Este é um ambiente de teste de integração direta - as gravações são feitas usando a interface externa do Telepatia Scribe ***",
     "bearerToken": "Token de Portador:",
     "enterToken": "Digite o token...",
     "authenticate": "Autenticar",
@@ -57,7 +57,16 @@
       "pause": "Pausar",
       "discard": "Descartar",
       "finish": "Finalizar",
-      "paused": "Pausado"
+      "paused": "Pausado",
+      "externalTitle": "Gravar com Telepatia Scribe",
+      "externalDescription": "Clique no link abaixo para abrir a interface do Telepatia Scribe e gravar sua consulta.",
+      "openScribe": "Abrir Telepatia Scribe",
+      "recordingInProgress": "Sessão de gravação em andamento...",
+      "completeInstructions": "Complete sua gravação na interface do Scribe, depois clique no botão abaixo.",
+      "markComplete": "Marcar Gravação como Concluída",
+      "reopenScribe": "Reabrir Scribe",
+      "skipForDemo": "Pular Gravação (Apenas Demo)",
+      "helpText": "A interface do Telepatia Scribe abrirá em uma nova aba. Complete sua gravação lá e retorne aqui para continuar o fluxo de integração."
     },
     "patient": {
       "confirmTitle": "Confirmar Informações do Paciente",

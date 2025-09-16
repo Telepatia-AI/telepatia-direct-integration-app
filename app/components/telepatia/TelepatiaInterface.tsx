@@ -29,8 +29,8 @@ function TelepatiaInterfaceContent({
   } = useTelepatia()
 
   return (
-    <div className="w-1/2 p-8 bg-white border-r border-gray-200 relative">
-      <h1 className="text-2xl font-bold mb-8 text-gray-800">Telepatia Interface</h1>
+    <div className="relative">
+      <h1 className="text-xl font-semibold mb-6 text-gray-800">Telepatia Interface</h1>
       
       {/* Modals */}
       {showConfirmModal && (

@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { PatientInfo, Session, WorkflowStep } from '@/app/types'
 import { useTranslation } from 'react-i18next'
 import ExternalSystemAPI, { validateBearerToken } from '@/app/services/api'
+import { CountryNames } from '@/app/enums/countryNamesEnum'
+import { IdentificationTypes } from '@/app/enums/identificationTypesEnum'
 
 interface ExternalSystemInterfaceProps {
   currentStep: WorkflowStep
@@ -37,8 +39,48 @@ export default function ExternalSystemInterface({
   const [apiError, setApiError] = useState<string | null>(null)
   const [isValidating, setIsValidating] = useState(false)
   const [validationError, setValidationError] = useState<string | null>(null)
+  
+  // Editable patient form fields
+  const [patientName, setPatientName] = useState('John Doe')
+  const [patientCountry, setPatientCountry] = useState('COLOMBIA')
+  const [patientIdType, setPatientIdType] = useState('CC')
+  const [patientIdValue, setPatientIdValue] = useState('abcd1234efg5678')
 
   const api = bearerToken ? new ExternalSystemAPI(bearerToken) : null
+
+  // Helper functions for form options
+  const getCountryDisplayName = (countryCode: string) => {
+    return t(`countries.${countryCode.toLowerCase()}`) || countryCode
+  }
+
+  const getIdTypeDisplayName = (idType: string) => {
+    return t(`idTypes.${idType.toLowerCase()}`) || idType
+  }
+
+  // Get commonly used countries for Latin America focus
+  const getCommonCountries = () => {
+    return [
+      CountryNames.COLOMBIA,
+      CountryNames.MEXICO,
+      CountryNames.PERU,
+      CountryNames.ARGENTINA,
+      CountryNames.CHILE,
+      CountryNames.ECUADOR,
+      CountryNames.VENEZUELA
+    ]
+  }
+
+  // Get common ID types
+  const getCommonIdTypes = () => {
+    return [
+      IdentificationTypes.CC, // Cédula de Ciudadanía
+      IdentificationTypes.CE, // Cédula de Extranjería  
+      IdentificationTypes.PASSPORT,
+      IdentificationTypes.TI, // Tarjeta de Identidad
+      IdentificationTypes.RC, // Registro Civil
+      IdentificationTypes.NIT // Tax ID
+    ]
+  }
 
   const maskToken = (token: string) => {
     if (!token) return ''
@@ -65,14 +107,20 @@ export default function ExternalSystemInterface({
 
   const handleInitializeConsult = async () => {
     if (currentStep === WorkflowStep.INITIALIZE_CONSULTATION && isAuthenticated && api) {
+      // Validate form fields
+      if (!patientName.trim() || !patientIdValue.trim()) {
+        setApiError('Please fill in all required fields')
+        return
+      }
+      
       setIsLoading(true)
       setApiError(null)
       
       const patient: PatientInfo = {
-        name: 'John Doe',
-        idCountry: 'Colombia',
-        idType: 'CC',
-        idValue: 'abcd1234efg5678'
+        name: patientName.trim(),
+        idCountry: patientCountry,
+        idType: patientIdType,
+        idValue: patientIdValue.trim()
       }
       
       // Call the API to update the current patient in the external system
@@ -115,11 +163,16 @@ export default function ExternalSystemInterface({
     setMedicalNotes('')
     setApiError(null)
     setCurrentStep(WorkflowStep.AUTHENTICATE)
+    // Reset form fields to defaults
+    setPatientName('John Doe')
+    setPatientCountry('COLOMBIA')
+    setPatientIdType('CC')
+    setPatientIdValue('abcd1234efg5678')
   }
 
   return (
-    <div className="w-1/2 p-8 bg-gray-100">
-      <h1 className="text-2xl font-bold mb-8 text-gray-800">{t('externalSystem.title')}</h1>
+    <div className="relative">
+      <h1 className="text-xl font-semibold mb-6 text-gray-800">{t('externalSystem.title')}</h1>
       
       {/* Bearer Token Authentication */}
       <div className={`mb-6 p-4 rounded-lg ${isAuthenticated ? 'bg-green-100 border border-green-300' : 'bg-yellow-100 border border-yellow-300'}`}>
@@ -183,13 +236,78 @@ export default function ExternalSystemInterface({
           <h2 className="text-xl font-semibold mb-4 text-gray-700">{t('externalSystem.initializeConsult')}</h2>
           <div className="space-y-4">
             <div className="border border-gray-300 p-4 rounded">
-              <p className="text-sm text-gray-600 mb-2">{t('externalSystem.clickToInitialize')}</p>
-              <ul className="text-sm space-y-1 mb-4">
-                <li><strong>{t('externalSystem.name')}:</strong> John Doe</li>
-                <li><strong>{t('externalSystem.country')}:</strong> Colombia</li>
-                <li><strong>{t('externalSystem.idType')}:</strong> CC</li>
-                <li><strong>{t('externalSystem.idValue')}:</strong> abcd1234efg5678</li>
-              </ul>
+              <p className="text-sm text-gray-600 mb-4">{t('externalSystem.clickToInitialize')}</p>
+              
+              {/* Editable Patient Form */}
+              <div className="space-y-4">
+                {/* Patient Name */}
+                <div>
+                  <label htmlFor="patient-name" className="block text-sm font-medium text-gray-700 mb-1">
+                    {t('externalSystem.name')} <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="patient-name"
+                    type="text"
+                    value={patientName}
+                    onChange={(e) => setPatientName(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder="Enter patient name"
+                  />
+                </div>
+
+                {/* Patient Country */}
+                <div>
+                  <label htmlFor="patient-country" className="block text-sm font-medium text-gray-700 mb-1">
+                    {t('externalSystem.country')}
+                  </label>
+                  <select
+                    id="patient-country"
+                    value={patientCountry}
+                    onChange={(e) => setPatientCountry(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  >
+                    {getCommonCountries().map((country) => (
+                      <option key={country} value={country}>
+                        {getCountryDisplayName(country)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Patient ID Type */}
+                <div>
+                  <label htmlFor="patient-id-type" className="block text-sm font-medium text-gray-700 mb-1">
+                    {t('externalSystem.idType')}
+                  </label>
+                  <select
+                    id="patient-id-type"
+                    value={patientIdType}
+                    onChange={(e) => setPatientIdType(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  >
+                    {getCommonIdTypes().map((idType) => (
+                      <option key={idType} value={idType}>
+                        {getIdTypeDisplayName(idType)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Patient ID Value */}
+                <div>
+                  <label htmlFor="patient-id-value" className="block text-sm font-medium text-gray-700 mb-1">
+                    {t('externalSystem.idValue')} <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="patient-id-value"
+                    type="text"
+                    value={patientIdValue}
+                    onChange={(e) => setPatientIdValue(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder="Enter patient ID"
+                  />
+                </div>
+              </div>
             </div>
             {apiError && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
@@ -198,9 +316,9 @@ export default function ExternalSystemInterface({
             )}
             <button
               onClick={handleInitializeConsult}
-              disabled={currentStep !== WorkflowStep.INITIALIZE_CONSULTATION || isLoading || !isAuthenticated}
+              disabled={currentStep !== WorkflowStep.INITIALIZE_CONSULTATION || isLoading || !isAuthenticated || !patientName.trim() || !patientIdValue.trim()}
               className={`w-full font-semibold py-3 px-6 rounded-lg transition-colors ${
-                currentStep === WorkflowStep.INITIALIZE_CONSULTATION && !isLoading && isAuthenticated
+                currentStep === WorkflowStep.INITIALIZE_CONSULTATION && !isLoading && isAuthenticated && patientName.trim() && patientIdValue.trim()
                   ? 'bg-indigo-500 hover:bg-indigo-600 text-white cursor-pointer'
                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
               }`}

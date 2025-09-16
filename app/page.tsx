@@ -2,77 +2,47 @@
 
 import { useState } from 'react'
 import Header from './components/shared/Header'
-import WorkflowChecklist from './components/shared/WorkflowChecklist'
 import LanguageSwitcher from './components/shared/LanguageSwitcher'
-import TelepatiaInterface from './components/telepatia/TelepatiaInterface'
-import ExternalSystemInterface from './components/external-system/ExternalSystemInterface'
-import { WorkflowStep, PatientInfo, Session } from './types'
+import IntegrationView from './components/integration/IntegrationView'
+import DoctorsManagement from './components/doctors/DoctorsManagement'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Users, TestTube2 } from 'lucide-react'
 
 export default function Home() {
-  const [currentStep, setCurrentStep] = useState<WorkflowStep>(WorkflowStep.AUTHENTICATE)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [bearerToken, setBearerToken] = useState('')
-  const [patientInfo, setPatientInfo] = useState<PatientInfo | null>(null)
-  const [selectedSession, setSelectedSession] = useState<Session | null>(null)
-
-  const handleAuthenticate = () => {
-    if (bearerToken.trim() && currentStep === WorkflowStep.AUTHENTICATE) {
-      setIsAuthenticated(true)
-      setCurrentStep(WorkflowStep.INITIALIZE_CONSULTATION)
-    }
-  }
-
-  const handleLogout = () => {
-    setIsAuthenticated(false)
-    setBearerToken('')
-    setCurrentStep(WorkflowStep.AUTHENTICATE)
-  }
-
-  const handleSessionCreated = (session: Session) => {
-    setSelectedSession(session)
-  }
+  const [activeTab, setActiveTab] = useState('integration')
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Header with warning */}
       <Header />
 
-      {/* Workflow Checklist with Language Switcher and Admin Link */}
-      <div className="relative">
-        <WorkflowChecklist currentStep={currentStep} />
-        <div className="absolute top-4 right-4 flex items-center gap-4">
-          {/* <a
-            href="/admin"
-            className="px-3 py-1 bg-purple-500 text-white text-sm rounded-lg hover:bg-purple-600 transition-colors"
-          >
-            Admin Panel
-          </a> */}
-          <LanguageSwitcher />
-        </div>
-      </div>
+      {/* Main Content */}
+      <div className="flex-1 container mx-auto px-4 py-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          {/* Tab Navigation */}
+          <div className="flex items-center justify-between">
+            <TabsList className="grid w-fit grid-cols-2 gap-4">
+              <TabsTrigger value="integration" className="flex items-center gap-2">
+                <TestTube2 className="h-4 w-4" />
+                Prueba de Integración
+              </TabsTrigger>
+              <TabsTrigger value="doctors" className="flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                Gestión de Doctores
+              </TabsTrigger>
+            </TabsList>
+            <LanguageSwitcher />
+          </div>
 
-      <div className="flex flex-1">
-        {/* Left Screen - Telepatia Interface */}
-        <TelepatiaInterface
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-          patientInfo={patientInfo}
-          onSessionCreated={handleSessionCreated}
-        />
+          {/* Tab Content */}
+          <TabsContent value="integration" className="space-y-6">
+            <IntegrationView />
+          </TabsContent>
 
-        {/* Right Screen - External System Interface */}
-        <ExternalSystemInterface
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-          patientInfo={patientInfo}
-          setPatientInfo={setPatientInfo}
-          selectedSession={selectedSession}
-          bearerToken={bearerToken}
-          setBearerToken={setBearerToken}
-          isAuthenticated={isAuthenticated}
-          handleAuthenticate={handleAuthenticate}
-          handleLogout={handleLogout}
-        />
+          <TabsContent value="doctors" className="space-y-6">
+            <DoctorsManagement />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   )

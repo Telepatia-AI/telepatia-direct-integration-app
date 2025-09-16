@@ -15,8 +15,7 @@ export default function SessionsListView({ setCurrentStep }: SessionsListViewPro
     setReassignSession,
     setShowReassignModal,
     setShowCreateNewPatient,
-    setNewPatientForm,
-    recordingTime
+    setNewPatientForm
   } = useTelepatia()
 
   const formatTime = (seconds: number) => {

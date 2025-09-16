@@ -1,6 +1,6 @@
 {
   "header": {
-    "warning": "*** Este es un entorno de prueba de integración directa - no graba realmente y el registro médico resultante está predefinido ***",
+    "warning": "*** Este es un entorno de prueba de integración directa - las grabaciones se realizan utilizando la interfaz externa de Telepatía Scribe ***",
     "bearerToken": "Token de Portador:",
     "enterToken": "Ingrese el token...",
     "authenticate": "Autenticar",
@@ -57,7 +57,16 @@
       "pause": "Pausar",
       "discard": "Descartar",
       "finish": "Finalizar",
-      "paused": "Pausado"
+      "paused": "Pausado",
+      "externalTitle": "Grabar con Telepatía Scribe",
+      "externalDescription": "Haga clic en el enlace a continuación para abrir la interfaz de Telepatía Scribe y grabar su consulta.",
+      "openScribe": "Abrir Telepatía Scribe",
+      "recordingInProgress": "Sesión de grabación en progreso...",
+      "completeInstructions": "Complete su grabación en la interfaz de Scribe, luego haga clic en el botón a continuación.",
+      "markComplete": "Marcar Grabación Como Completa",
+      "reopenScribe": "Reabrir Scribe",
+      "skipForDemo": "Saltar Grabación (Solo Demo)",
+      "helpText": "La interfaz de Telepatía Scribe se abrirá en una nueva pestaña. Complete su grabación allí y regrese aquí para continuar con el flujo de integración."
     },
     "patient": {
       "confirmTitle": "Confirmar Información del Paciente",

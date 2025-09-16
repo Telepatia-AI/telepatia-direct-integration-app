@@ -3,7 +3,7 @@
 import { useTelepatia } from '../../context/TelepatiaContext'
 import PatientInfoCard from '../../shared/PatientInfoCard'
 import CreatePatientForm from '../../shared/CreatePatientForm'
-import { PatientInfo } from '@/app/types'
+import { PatientInfo, Session } from '@/app/types'
 
 interface ReassignPatientModalProps {
   patientInfo: PatientInfo | null
@@ -29,12 +29,12 @@ export default function ReassignPatientModal({ patientInfo }: ReassignPatientMod
     if (useExisting) {
       // Use existing patient info
       if (reassignSession) {
-        const updatedSession = { ...reassignSession, patientInfo }
-        const updatedSessions = sessions.map(s => 
+        const updatedSession = { ...reassignSession, patientInfo: patientInfo || undefined }
+        const updatedSessions = sessions.map(s =>
           s.id === reassignSession.id ? updatedSession : s
-        )
+        ) as Session[]
         setSessions(updatedSessions)
-        setSelectedSession(updatedSession)
+        setSelectedSession(updatedSession as Session)
       }
       setShowReassignModal(false)
       setShowSessionsList(true)

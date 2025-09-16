@@ -1,6 +1,6 @@
 {
   "header": {
-    "warning": "*** This is a direct integration test environment - it doesn't actually record and the resulting medical record is predefined ***",
+    "warning": "*** This is a direct integration test environment - recordings are made using the external Telepatia Scribe interface ***",
     "bearerToken": "Bearer Token:",
     "enterToken": "Enter token...",
     "authenticate": "Authenticate",
@@ -57,7 +57,16 @@
       "pause": "Pause",
       "discard": "Discard",
       "finish": "Finish",
-      "paused": "Paused"
+      "paused": "Paused",
+      "externalTitle": "Record with Telepatia Scribe",
+      "externalDescription": "Click the link below to open the Telepatia Scribe interface and record your consultation.",
+      "openScribe": "Open Telepatia Scribe",
+      "recordingInProgress": "Recording session in progress...",
+      "completeInstructions": "Complete your recording in the Scribe interface, then click the button below.",
+      "markComplete": "Mark Recording Complete",
+      "reopenScribe": "Reopen Scribe",
+      "skipForDemo": "Skip Recording (Demo Only)",
+      "helpText": "The Telepatia Scribe interface will open in a new tab. Complete your recording there and return here to continue the integration workflow."
     },
     "patient": {
       "confirmTitle": "Confirm Patient Information",
