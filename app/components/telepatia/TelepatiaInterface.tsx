@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { TelepatiaProvider, useTelepatia } from './context/TelepatiaContext'
 import RecordingView from './views/recording/RecordingView'
 import SessionsListView from './views/sessions/SessionsListView'
@@ -23,10 +24,18 @@ function TelepatiaInterfaceContent({
 }: TelepatiaInterfaceProps) {
   const {
     showConfirmModal,
+    setShowConfirmModal,
     showErrorModal,
     showSessionsList,
     showReassignModal
   } = useTelepatia()
+
+  // Auto-show ConfirmPatientModal when reaching CONFIRM_PATIENT step
+  useEffect(() => {
+    if (currentStep === WorkflowStep.CONFIRM_PATIENT) {
+      setShowConfirmModal(true)
+    }
+  }, [currentStep, setShowConfirmModal])
 
   return (
     <div className="relative">
